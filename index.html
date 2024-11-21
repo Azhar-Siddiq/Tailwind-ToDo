@@ -1,0 +1,284 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-2xl p-6 transform transition-all duration-300 hover:scale-[1.02]">
+        <div class="flex items-center mb-6">
+            <i class="fas fa-clipboard-list text-blue-600 mr-3 text-3xl"></i>
+            <h1 class="text-3xl font-bold text-gray-800">TODO List</h1>
+        </div>
+        
+        <div class="flex mb-6 shadow-md rounded-lg overflow-hidden">
+            <input 
+                id="todoInput" 
+                type="text" 
+                placeholder="What needs to be done?" 
+                class="flex-grow p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <button 
+                id="addTodoBtn"
+                class="bg-blue-500 text-white px-5 hover:bg-blue-600 transition-colors flex items-center"
+            >
+                <i class="fas fa-plus mr-2"></i>Add
+            </button>
+        </div>
+
+        <ul id="todoList" class="space-y-3"></ul>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todoInput');
+        const addTodoBtn = document.getElementById('addTodoBtn');
+        const todoList = document.getElementById('todoList');
+
+        let todos = [];
+
+        function renderTodos() {
+            todoList.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = `
+                    flex items-center p-3 rounded-lg 
+                    ${todo.completed ? 'bg-green-50 border-l-4 border-green-500' : 'bg-gray-50 border-l-4 border-blue-500'}
+                    transition-all duration-200 hover:shadow-md
+                `;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todo.completed;
+                checkbox.className = 'hidden';
+                checkbox.id = `todo-${index}`;
+                checkbox.addEventListener('change', () => toggleTodo(index));
+
+                const checkLabel = document.createElement('label');
+                checkLabel.htmlFor = `todo-${index}`;
+                checkLabel.innerHTML = `
+                    <i class="
+                        ${todo.completed ? 'fas fa-check-circle text-green-500' : 'far fa-circle text-blue-500'}
+                        mr-3 cursor-pointer text-xl
+                    "></i>
+                `;
+
+                const titleInput = document.createElement('input');
+                titleInput.type = 'text';
+                titleInput.value = todo.title;
+                titleInput.className = `
+                    flex-grow bg-transparent 
+                    ${todo.completed ? 'line-through text-gray-400' : 'text-gray-700'}
+                    focus:outline-none
+                `;
+                titleInput.disabled = todo.completed;
+                titleInput.addEventListener('change', (e) => updateTodoTitle(index, e.target.value));
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '<i class="fas fa-trash-alt text-red-400 hover:text-red-600"></i>';
+                deleteBtn.className = 'ml-3';
+                deleteBtn.addEventListener('click', () => deleteTodo(index));
+
+                li.appendChild(checkbox);
+                li.appendChild(checkLabel);
+                li.appendChild(titleInput);
+                li.appendChild(deleteBtn);
+
+                todoList.appendChild(li);
+            });
+        }
+
+        function addTodo() {
+            const title = todoInput.value.trim();
+            if (title) {
+                todos.push({ title, completed: false });
+                todoInput.value = '';
+                renderTodos();
+            }
+        }
+
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            renderTodos();
+        }
+
+        function updateTodoTitle(index, newTitle) {
+            todos[index].title = newTitle;
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        addTodoBtn.addEventListener('click', addTodo);
+        todoInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTodo();
+        });
+
+        renderTodos();
+    </script>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced TODO App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 transform transition-all duration-300 hover:scale-[1.01] border-2 border-indigo-100">
+        <div class="flex items-center mb-6">
+            <i class="fas fa-clipboard-list text-indigo-600 mr-3 text-4xl"></i>
+            <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">TODO List</h1>
+        </div>
+        
+        <div class="flex mb-6 shadow-lg rounded-xl overflow-hidden">
+            <input 
+                id="todoInput" 
+                type="text" 
+                placeholder="What needs to be done?" 
+                class="flex-grow p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg"
+            >
+            <button 
+                id="addTodoBtn"
+                class="bg-indigo-500 text-white px-5 hover:bg-indigo-600 transition-colors flex items-center"
+            >
+                <i class="fas fa-plus mr-2"></i>Add
+            </button>
+        </div>
+
+        <ul id="todoList" class="space-y-4"></ul>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todoInput');
+        const addTodoBtn = document.getElementById('addTodoBtn');
+        const todoList = document.getElementById('todoList');
+
+        let todos = [];
+
+        function renderTodos() {
+            todoList.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = `
+                    flex items-center p-4 rounded-xl 
+                    ${todo.completed ? 'bg-green-50 border-l-4 border-green-500' : 'bg-gray-50 border-l-4 border-indigo-500'}
+                    transition-all duration-200 hover:shadow-lg relative
+                `;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todo.completed;
+                checkbox.className = 'hidden';
+                checkbox.id = `todo-${index}`;
+                checkbox.addEventListener('change', () => toggleTodo(index));
+
+                const checkLabel = document.createElement('label');
+                checkLabel.htmlFor = `todo-${index}`;
+                checkLabel.innerHTML = `
+                    <i class="
+                        ${todo.completed ? 'fas fa-check-circle text-green-500' : 'far fa-circle text-indigo-500'}
+                        mr-3 cursor-pointer text-2xl
+                    "></i>
+                `;
+
+                const titleInput = document.createElement('input');
+                titleInput.type = 'text';
+                titleInput.value = todo.title;
+                titleInput.className = `
+                    flex-grow bg-transparent 
+                    ${todo.completed ? 'line-through text-gray-400' : 'text-gray-700'}
+                    focus:outline-none text-lg
+                `;
+                titleInput.disabled = todo.completed;
+
+                const actionContainer = document.createElement('div');
+                actionContainer.className = 'flex items-center';
+
+                const editBtn = document.createElement('button');
+                editBtn.innerHTML = '<i class="fas fa-edit text-blue-400 hover:text-blue-600 mr-3"></i>';
+                editBtn.className = `
+                    ${todo.completed ? 'hidden' : ''}
+                `;
+                editBtn.addEventListener('click', () => {
+                    titleInput.disabled = false;
+                    titleInput.focus();
+                });
+
+                titleInput.addEventListener('blur', () => {
+                    if (titleInput.value.trim()) {
+                        updateTodoTitle(index, titleInput.value);
+                        titleInput.disabled = true;
+                    }
+                });
+
+                titleInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        if (titleInput.value.trim()) {
+                            updateTodoTitle(index, titleInput.value);
+                            titleInput.disabled = true;
+                        }
+                    }
+                });
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '<i class="fas fa-trash-alt text-red-400 hover:text-red-600"></i>';
+                deleteBtn.addEventListener('click', () => deleteTodo(index));
+
+                actionContainer.appendChild(editBtn);
+                actionContainer.appendChild(deleteBtn);
+
+                li.appendChild(checkbox);
+                li.appendChild(checkLabel);
+                li.appendChild(titleInput);
+                li.appendChild(actionContainer);
+
+                todoList.appendChild(li);
+            });
+        }
+
+        function addTodo() {
+            const title = todoInput.value.trim();
+            if (title) {
+                todos.push({ title, completed: false });
+                todoInput.value = '';
+                renderTodos();
+            }
+        }
+
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            renderTodos();
+        }
+
+        function updateTodoTitle(index, newTitle) {
+            todos[index].title = newTitle;
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        addTodoBtn.addEventListener('click', addTodo);
+        todoInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTodo();
+        });
+
+        renderTodos();
+    </script>
+</body>
+</html>
